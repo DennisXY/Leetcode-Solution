@@ -22,7 +22,7 @@ class Solution:
         for i in range(1, length):
             mindp[i] = min(mindp[i-1]*nums[i], maxdp[i-1]*nums[i], nums[i])
             maxdp[i] = max(maxdp[i-1]*nums[i], mindp[i-1]*nums[i], nums[i])
-        return (max(max(mindp), max(maxdp)))
+        return max(max(mindp), max(maxdp))
 
     def maxProduct2(self, nums):
         # 只需要两个变量DP
@@ -34,4 +34,3 @@ class Solution:
             pre_max = max(temp_max*nums[i], temp_min*nums[i], nums[i])
             result = max(result, pre_min, pre_max)
         return result
-
