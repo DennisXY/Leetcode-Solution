@@ -13,38 +13,19 @@
 # Output: 4
 # Explanation: Rob house 1 (money = 1) and then rob house 3 (money = 3).
 #            Total amount you can rob = 1 + 3 = 4.
-# Example 2:
-#
-# Input: nums = [2,7,9,3,1]
-# Output: 12
-# Explanation: Rob house 1 (money = 2), rob house 3 (money = 9) and rob house 5 (money = 1).
-#            Total amount you can rob = 2 + 9 + 1 = 12.
-#
-#
-# Constraints:
-#
-# 0 <= nums.length <= 100
-# 0 <= nums[i] <= 400
+
 
 class Solution:
-    def rob(self, nums):
+    def rob(self, nums) -> int:
         length = len(nums)
-        if length == 0:
-            return 0
-        if length == 1:
-            return nums[0]
-        if length == 2:
-            return max(nums[0], nums[1])
-
-        house = [0 for i in range(length)]
-        house[0] = nums[0]
-        house[1] = max(nums[0], nums[1])
-        for i in range(2, length):
-            house[i] = max(house[i-2]+nums[i], house[i-1])
-        return house[length-1]
-
-if __name__ == '__main__':
-    a = [1]
-    solution = Solution()
-    c = solution.rob(a)
-    print(c)
+        # dp = [0] * (length+1)
+        # dp[1] = nums[0]
+        # for i in range(2, length+1):
+        #     dp[i] = max(dp[i-1], dp[i-2]+nums[i-1])
+        # return max(dp[-1], dp[-2])
+        pre_two, pre_one = 0, nums[0]
+        for i in range(2, length+1):
+            temp = max(pre_one, pre_two+nums[i-1])
+            pre_two = pre_one
+            pre_one = temp
+        return max(pre_two, pre_one)

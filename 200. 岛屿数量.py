@@ -12,42 +12,29 @@
 #   ["0","0","0","0","0"]
 # ]
 # Output: 1
-# Example 2:
-#
-# Input: grid = [
-#   ["1","1","0","0","0"],
-#   ["1","1","0","0","0"],
-#   ["0","0","1","0","0"],
-#   ["0","0","0","1","1"]
-# ]
-# Output: 3
+
 
 class Solution:
-    def numIslands(self, grid: List[List[str]]) -> int:
-        from collections import deque
-        m, n = len(grid), len(grid[0])
-        island = deque()
-        res = 0
-        for i in range(m):
-            for j in range(n):
-                grid[i][j] = int(grid[i][j])
+    def numIslands(self, grid) -> int:
+        move = [[-1, 0], [1, 0], [0, -1], [0, 1]]
+        m, n, result = len(grid), len(grid[0]), 0
 
+        island = list()
         for i in range(m):
             for j in range(n):
-                if grid[i][j] == 0:
+                if grid[i][j] == '0':
                     continue
-                res += 1
+                result += 1
                 island.append([i, j])
                 while island:
-                    x, y = island.popleft()
-                    if grid[x][y] == 0:
+                    x, y = island.pop(0)
+                    if grid[x][y] == '0':
                         continue
-                    grid[x][y] = 0
-                    for newX, newY in [[x - 1, y], [x + 1, y], [x, y - 1], [x, y + 1]]:
-                        if not 0 <= newX < m or not 0 <= newY < n:
+                    grid[x][y] = '0'
+                    for newX, newY in move:
+                        if not 0 <= x+newX < m or not 0 <= y+newY < n:
                             continue
-                        if grid[newX][newY] == 0:
+                        if grid[x+newX][y+newY] == '0':
                             continue
-                        island.append([newX, newY])
-
-        return res
+                        island.append([x+newX, y+newY])
+        return result
