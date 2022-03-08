@@ -62,7 +62,7 @@ class Solution:
 
         for i in range(n-1, n-k-1, -1):
             nums[0], nums[i] = nums[i], nums[0]
-            n-=1;
+            n -= 1
             self.heapify(nums, 0, n)
         return nums[-k]
 
