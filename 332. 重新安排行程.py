@@ -21,6 +21,8 @@
 # Explanation: Another possible reconstruction is ["JFK","SFO","ATL","JFK","ATL","SFO"].
 # But it is larger in lexical order.
 import collections
+
+
 class Solution:
     def findItinerary(self, tickets):
         d = collections.defaultdict(list)  # 邻接表

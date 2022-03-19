@@ -14,14 +14,13 @@
 # Note:
 # You may assume that you have an infinite number of each kind of coin.
 
-class Solution:
-    def coinChange(self, coins, amount):
-        dp = [10000 for i in range(amount+1)]
-        length = len(coins)
-        if length == 0 or amount == 0:
-            return 0
 
+class Solution:
+    def coinChange(self, coins, amount: int) -> int:
+        dp = [float('inf')]*(amount+1)
         coins.sort()
+        if len(coins) == 0 or amount == 0:
+            return 0
         for coin in coins:
             if coin > amount:
                 break
@@ -31,10 +30,11 @@ class Solution:
                 if coin > i:
                     break
                 dp[i] = min(dp[i], dp[i-coin]+1)
-        if dp[-1] != 10000:
+        if dp[-1] != float('inf'):
             return dp[-1]
         else:
             return -1
+
 
 if __name__ == '__main__':
     a = [2]
