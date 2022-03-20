@@ -33,7 +33,7 @@ class Solution:
         quicksort(0, len(arr)-1)
         return arr
 
-#Using heap sort
+# Using heap sort
 class Solution:
     def heapify(self, array, i, n):
         largest = i
