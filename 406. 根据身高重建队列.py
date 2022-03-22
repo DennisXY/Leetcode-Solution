@@ -12,6 +12,9 @@
 # Output:
 # [[5,0], [7,0], [5,2], [6,1], [4,4], [7,1]]
 
+# 当我们放入第i个人时，只需要将其插入队列中，使得他的前面恰好有k_i个人即可。
+
+
 class Solution:
     def reconstructQueue(self, people):
         people.sort(key = lambda x: (-x[0], x[1]))
