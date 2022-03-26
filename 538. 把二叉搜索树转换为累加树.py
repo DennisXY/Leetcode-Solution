@@ -20,6 +20,7 @@ class TreeNode:
         self.left = None
         self.right = None
 
+
 class Solution:
     def convertBST(self, root: TreeNode) -> TreeNode:
         def dfs (root: TreeNode):

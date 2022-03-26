@@ -2,7 +2,8 @@
 # Now you have 2 symbols + and -.
 # For each integer, you should choose one from + and - as its new symbol.
 #
-# Find out how many ways to assign symbols to make sum of integers equal to target S.
+# Find out how many ways to assign symbols to make sum of integers
+# equal to target S.
 #
 # Example 1:
 #
@@ -18,34 +19,29 @@
 #
 # There are 5 ways to assign symbols to make the sum of nums be target 3.
 
+# 转化为0-1背包问题，选取的元素加起来要等于正数和
+# a+b = sum, b-a = target, -> b(正数和) = (sum+target)/2
+# dp[i][j] 选取第i个元素，正数和为j
+# 若nums[i]取正号，dp[i][j] = dp[i-1][j-nums[i]]；
+# 若nums[i]取负号，dp[i][j] = dp[i-1][j]。（因为j为正数和，取负号并不会改变正数和）
+
+
 class Solution:
-    def findTargetSumWays(self, nums, S):
-        # total = sum(nums)
-        # if abs(total) < abs(S): return 0  # 目标和太大
-        #
-        # length = len(nums)
-        # dp = [[0] * 2001 for i in range(length+1)]
-        # #dp[i][j] 前i个数凑出j的可能性
-        #
-        # dp[1][nums[0]] = 1
-        # dp[1][-nums[0]] += 1
-        # #在很多语言中，是不允许数组的下标为负数的
-        # #由于数组中所有数的和不超过 1000，那么 j 的最小值可以达到 -1000
-        # for i in range(2, length+1):
-        #     for j in range(-total, total+1):
-        #         dp[i][j + 1000] = dp[i-1][j-nums[i-1] + 1000] + dp[i-1][j+nums[i-1] + 1000]
-        # return dp[-1][-1]
-        length = len(nums)
-        dp = {(0, 0): 1}
-        for i in range(1, length + 1):
-            for j in range(-sum(nums), sum(nums) + 1):
-                dp[(i, j)] = dp.get((i - 1, j - nums[i - 1]), 0) + dp.get((i - 1, j + nums[i - 1]), 0)
-        return dp.get((length, S), 0)
-
-
-if __name__ == '__main__':
-    a = [1, 1, 1, 1, 1]
-    b = 3
-    solution = Solution()
-    c = solution.findTargetSumWays(a, b)
-    print(c)
+    def findTargetSumWays(self, nums: List[int], target: int) -> int:
+        if (target+sum(nums))%2!=0:
+            return 0
+        total = (target+sum(nums))//2 # 定义正数和为total
+        if total < 0: # 正数和为负，返回0
+            return 0
+        dp = [[0 for _ in range(total+1)] for _ in range(len(nums))]
+        for j in range(total+1): # 初始化第一行
+            if nums[0] == j:
+                dp[0][j] = 1
+        dp[0][0] += 1 # 初始化第一行后，[0][0]自增1，到此才算初始化结束
+        for i in range(1, len(nums)):
+            for j in range(total+1):
+                if j >= nums[i]:
+                    dp[i][j] = dp[i-1][j] + dp[i-1][j-nums[i]]
+                else:
+                    dp[i][j] = dp[i-1][j]
+        return dp[-1][-1]
