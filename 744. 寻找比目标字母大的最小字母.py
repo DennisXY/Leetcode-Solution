@@ -8,55 +8,20 @@
 # letters = ["c", "f", "j"]
 # target = "a"
 # Output: "c"
-#
-# Input:
-# letters = ["c", "f", "j"]
-# target = "c"
-# Output: "f"
-#
-# Input:
-# letters = ["c", "f", "j"]
-# target = "d"
-# Output: "f"
-#
-# Input:
-# letters = ["c", "f", "j"]
-# target = "g"
-# Output: "j"
-#
-# Input:
-# letters = ["c", "f", "j"]
-# target = "j"
-# Output: "c"
-#
-# Input:
-# letters = ["c", "f", "j"]
-# target = "k"
-# Output: "c"
-# Note:
-# letters has a length in range [2, 10000].
-# letters consists of lowercase letters, and contains at least 2 unique letters.
-# target is a lowercase letter.
+
 
 class Solution:
-    def nextGreatestLetter(self, letters, target):
-        length = len(letters)
+    def nextGreatestLetter(self, letters: List[str], target: str) -> str:
+        # 二分
         left = 0
-        right = length - 1
-        while (left <= right):
+        right = len(letters) # 左闭右开
+        while left < right:
             mid = (left + right) // 2
             if letters[mid] > target:
-                right = mid - 1
+                right = mid
             else:
                 left = mid + 1
-        if left == length:
+        if left >= len(letters):
             return letters[0]
-        else:
-            return letters[left]
+        return letters[left]
 
-if __name__ == '__main__':
-    a = ["e","e","e","e","e","e","n","n","n","n"]
-    b = "e"
-    solution = Solution()
-    c = solution.nextGreatestLetter(a, b)
-    print(c)
